@@ -89,7 +89,7 @@ public class CourceService {
 	static public List<NewClassModel> getListNewClass(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		String jsonResponse = CommonService.getWithParams(ApiConstant.LIST_NEWCLASS, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.LIST_NEWCLASS, params, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
 		});
@@ -107,7 +107,7 @@ public class CourceService {
 
 	static public NewClassModel getNewClass(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.NEWCLASS_FINDID, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.NEWCLASS_FINDID, params, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
@@ -125,7 +125,7 @@ public class CourceService {
 
 	static public List<NewClassModel> search(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.NEWCLASS_FILTER, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.NEWCLASS_FILTER, params, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {

@@ -26,10 +26,12 @@ public class CommonService {
 		return BASE_URL_API + path;
 	}
 
-	static String get(String apiUrl) {
+	static String get(String apiUrl, HttpSession session) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<String> entity = new HttpEntity<>("parameters");
+		headers.set("token", "" + session.getAttribute("accessToken"));
+		
+		HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 		try {
 			ResponseEntity<String> response = restTemplate.exchange(takeApiURL(apiUrl), HttpMethod.GET, entity,
 					String.class);
@@ -84,7 +86,7 @@ public class CommonService {
 		}
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("token", "Bearer " + session.getAttribute("accessToken"));
+		headers.set("token", session.getAttribute("accessToken")+"");
 		HttpEntity<String> requestEntity = new HttpEntity<String>(jsonReq, headers);
 		try {
 			String resString = restTemplate.postForObject(takeApiURL(apiUrl) + "?" + paramsSrt, requestEntity,
@@ -95,7 +97,7 @@ public class CommonService {
 		}
 	}
 
-	static String getWithParams(String apiUrl, Map<String, Object> params) {
+	static String getWithParams(String apiUrl, Map<String, Object> params, HttpSession session) {
 		String paramsSrt = "";
 		for (String key : params.keySet()) {
 			paramsSrt += key + "=" + params.get(key).toString() + "&";
@@ -103,7 +105,9 @@ public class CommonService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<String> entity = new HttpEntity<>("parameters");
+		headers.set("token", "" + session.getAttribute("accessToken"));
+		
+		HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 		try {
 			ResponseEntity<String> response = restTemplate.exchange(takeApiURL(apiUrl) + "?" + paramsSrt,
 					HttpMethod.GET, entity, String.class);

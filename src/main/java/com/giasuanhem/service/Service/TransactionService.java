@@ -46,7 +46,7 @@ public class TransactionService {
 	static public List<TransactionHistoryModel> getListTransaction(HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		String jsonResponse = CommonService.get(ApiConstant.LIST_TRANSACTION);
+		String jsonResponse = CommonService.get(ApiConstant.LIST_TRANSACTION, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -67,7 +67,7 @@ public class TransactionService {
 	static public List<TransactionHistoryModel> search(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		String jsonResponse = CommonService.getWithParams(ApiConstant.TRANSACTION_FILTER, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.TRANSACTION_FILTER, params, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -88,7 +88,7 @@ public class TransactionService {
 	static public StatisticalModel statistical(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		String jsonResponse = CommonService.getWithParams(ApiConstant.TRANS_STATIS, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.TRANS_STATIS, params, session);
 		System.out.println(jsonResponse);
 		ObjectMapper objectMapper = new ObjectMapper();
 

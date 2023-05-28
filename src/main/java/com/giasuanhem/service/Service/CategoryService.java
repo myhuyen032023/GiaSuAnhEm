@@ -96,7 +96,7 @@ public class CategoryService {
 	static public List<CategoryModel> getListCategory(HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		String jsonResponse = CommonService.get(ApiConstant.LIST_CATEGORY);
+		String jsonResponse = CommonService.get(ApiConstant.LIST_CATEGORY, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -118,7 +118,7 @@ public class CategoryService {
 
 	static public List<CategoryModel> getListCategory(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.CATEGORY_FILTER, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.CATEGORY_FILTER, params, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
@@ -137,7 +137,7 @@ public class CategoryService {
 
 	static public CategoryModel getCategory(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.CATEGORY_FINDID, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.CATEGORY_FINDID, params, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {

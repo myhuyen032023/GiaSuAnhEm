@@ -95,7 +95,7 @@ public class ClassService {
 	static public List<ClassModel> getListClass(HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		String jsonResponse = CommonService.get(ApiConstant.LIST_CLASS);
+		String jsonResponse = CommonService.get(ApiConstant.LIST_CLASS, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -118,7 +118,7 @@ public class ClassService {
 
 	static public ClassModel getClass(Map<String, Object> param, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.CLASS_FINDID, param);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.CLASS_FINDID, param, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {

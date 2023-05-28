@@ -39,6 +39,7 @@ public class ApiConstant {
 	public static final String SALARY_REMOVE = "/salaryinfo/remove";
 
 	public static final String CHECK_LOGIN = "/auth/login";
+	public static final String CHECK_LOGIN_ADMIN = "/auth/login-admin";
 	public static final String REGISTER = "/auth/register";
 
 	public static final String CATEGORY_FILTER = "/category/filter";

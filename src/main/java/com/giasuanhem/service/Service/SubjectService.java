@@ -81,7 +81,7 @@ public class SubjectService {
 
 	static public List<SubjectModel> getListSubject(HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.get(ApiConstant.LIST_SUBJECT);
+		String jsonResponse = CommonService.get(ApiConstant.LIST_SUBJECT, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
@@ -100,7 +100,7 @@ public class SubjectService {
 
 	static public SubjectModel getSubject(Map<String, Object> param, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.SUBJECT_FINDID, param);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.SUBJECT_FINDID, param, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
 		});

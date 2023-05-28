@@ -45,7 +45,7 @@ public class AuthorizationAdminController {
 		params.put("username", username);
 		params.put("password", password);
 
-		AccountService.checkLogin(params, session);
+		AccountService.checkLoginAdmin(params, session);
 		return "redirect:/admin";
 
 	}

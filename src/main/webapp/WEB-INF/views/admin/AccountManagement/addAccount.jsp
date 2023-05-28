@@ -66,8 +66,8 @@
 				<div class="title2">
 					<strong>Thêm tài khoản</strong>
 				</div>
-				
-				
+
+
 				<form action="${pageContext.request.contextPath }/createAccount"
 					method="post">
 					<div class="user-box" style="margin-top: 5px; margin-bottom: 15px;">
@@ -130,8 +130,8 @@
 						</div>
 					</div>
 					<div class="row align-middle">
-					
-					
+
+
 						<button class="btn btn-primary btn-block mb-4" type="submit">
 							<i class="fa-solid fa-plus icon"></i> Thêm tài khoản
 						</button>

@@ -86,7 +86,7 @@ public class PostService {
 
 	static public List<PostModel> getListPostWithParams(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.POST_FILTER, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.POST_FILTER, params, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
@@ -105,7 +105,7 @@ public class PostService {
 
 	static public PostModel getPost(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.POST_FINDID, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.POST_FINDID, params, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {

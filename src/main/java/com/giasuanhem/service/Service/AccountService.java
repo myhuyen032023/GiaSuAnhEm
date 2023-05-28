@@ -78,7 +78,7 @@ public class AccountService {
 
 	static public AccountModel getAccount(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.ACCOUNT_FINDID, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.ACCOUNT_FINDID, params, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
@@ -97,7 +97,7 @@ public class AccountService {
 	static public List<AccountModel> getListAccount(HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		String jsonResponse = CommonService.get(ApiConstant.LIST_ACCOUNT);
+		String jsonResponse = CommonService.get(ApiConstant.LIST_ACCOUNT, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
@@ -117,7 +117,7 @@ public class AccountService {
 
 	static public List<AccountModel> getListAccount(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.ACCOUNT_FILTER, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.ACCOUNT_FILTER, params, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
@@ -160,6 +160,49 @@ public class AccountService {
 		session.setAttribute("id", modelAccount.getId());
 		session.setAttribute("state", modelAccount.getState());
 		session.setAttribute("accessToken", modelAccount.getToken());
+		
+		System.out.println(modelAccount.getToken());
+		System.out.println(jsonResponse);
+
+		if (modelAccount.getRole() == 0) {
+			session.removeAttribute("role");
+			session.setAttribute("admin", modelAccount.getUsername());
+			modelAccount = null;
+		} else if (modelAccount.getRole() == 1) {
+
+			session.setAttribute("role", "tutor");
+		} else {
+			session.setAttribute("role", "parent");
+		}
+
+		session.removeAttribute("errorLogin");
+	}
+	
+	static public void checkLoginAdmin(Map<String, Object> params, HttpSession session)
+			throws JsonParseException, JsonMappingException, IOException {
+		session.removeAttribute("accessToken");
+
+		String jsonResponse = null;
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		jsonResponse = CommonService.postWithParams(ApiConstant.CHECK_LOGIN_ADMIN, params, session);
+		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
+		});
+
+		if (!res.getStatus()) {
+			session.setAttribute("errorLogin", res.getMessage());
+			return;
+		}
+
+		modelAccount = objectMapper.convertValue(res.getData(), new TypeReference<AccountModel>() {
+		});
+
+		session.setAttribute("id", modelAccount.getId());
+		session.setAttribute("state", modelAccount.getState());
+		session.setAttribute("accessToken", modelAccount.getToken());
+		
+		System.out.println(modelAccount.getToken());
+		System.out.println(jsonResponse);
 
 		if (modelAccount.getRole() == 0) {
 			session.removeAttribute("role");

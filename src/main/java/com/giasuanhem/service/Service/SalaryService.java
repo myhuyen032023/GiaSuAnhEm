@@ -86,7 +86,7 @@ public class SalaryService {
 
 	static public List<SalaryModel> getListSalary(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.SALARY_FILTER, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.SALARY_FILTER, params, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -105,7 +105,7 @@ public class SalaryService {
 
 	static public SalaryModel getSalary(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.SALARY_FINDID, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.SALARY_FINDID, params, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {

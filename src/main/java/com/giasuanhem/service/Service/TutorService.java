@@ -66,7 +66,7 @@ public class TutorService {
 
 	static public List<TutorModel> getListTutor(HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.get(ApiConstant.LIST_TUTOR);
+		String jsonResponse = CommonService.get(ApiConstant.LIST_TUTOR, session);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
@@ -86,7 +86,7 @@ public class TutorService {
 
 	static public TutorModel getTutor(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.TUTOR_FINDID, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.TUTOR_FINDID, params, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
 		});
@@ -103,7 +103,7 @@ public class TutorService {
 
 	static public List<TutorModel> search(Map<String, Object> params, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
-		String jsonResponse = CommonService.getWithParams(ApiConstant.TUTOR_FILTER, params);
+		String jsonResponse = CommonService.getWithParams(ApiConstant.TUTOR_FILTER, params, session);
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		ResponseModel res = objectMapper.readValue(jsonResponse, new TypeReference<ResponseModel>() {
