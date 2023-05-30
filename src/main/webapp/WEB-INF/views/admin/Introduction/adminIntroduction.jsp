@@ -59,7 +59,6 @@
 				</div>
 				<div style="text-align: center;">
 
-
 					<form action="./uploadIntroduction" method="post">
 						<input type="hidden" name="id"
 							value="${listIntroductionPost[0].id}"> <input

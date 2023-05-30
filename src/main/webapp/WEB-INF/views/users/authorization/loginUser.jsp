@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.giasuanhem.service.CSRF" %>
+<%@ page import="com.giasuanhem.service.CSRF"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,16 +24,17 @@
 		<div class="user-box" style="margin-top: 5px; margin-bottom: 15px;">
 			<small class="text" style="color: red">${sessionScope.errorLogin}</small>
 		</div>
-		
+
 		<!-- Thêm token trong form đăng nhập -->
-			<%
-			// generate a random CSRF token
-			String csrfToken = CSRF.getToken();
-			
-			// place the CSRF token in a cookie
-			javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
-			response.addCookie(cookie);
-			%>
+		<%
+		// generate a random CSRF token
+		String csrfToken = CSRF.getToken();
+
+		// place the CSRF token in a cookie
+		javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
+		String cookieHeaderValue = cookie.getName() + "=" + cookie.getValue() + ";HttpOnly;Secure;SameSite=LAX";
+		response.addHeader(org.springframework.http.HttpHeaders.SET_COOKIE, cookieHeaderValue);
+		%>
 		<form action="dang-nhap" method="post">
 
 			<div class="user-box">
@@ -45,9 +46,9 @@
 				<input class="input" type="password" name="password"
 					required="required" /> <label>Mật khẩu</label>
 			</div>
-			
-			<input type="hidden" name="csrfToken" value="<%= csrfToken %>"/>
-			
+
+			<input type="hidden" name="csrfToken" value="<%=csrfToken%>" />
+
 
 			<button class="submit">
 				<span></span> <span></span> <span></span> <span></span> Đăng nhập

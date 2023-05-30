@@ -23,6 +23,8 @@ import com.giasuanhem.service.Mapper.MapperModel;
 import com.giasuanhem.service.Service.CommonService;
 import com.giasuanhem.service.Service.PostService;
 
+import org.owasp.encoder.Encode;
+
 @Controller
 public class RecruitmentManagementController {
 	@Autowired
@@ -33,12 +35,13 @@ public class RecruitmentManagementController {
 	HttpSession session;
 
 	@RequestMapping(value = "/quanlytuyendung", method = RequestMethod.GET)
-	public ModelAndView recruitmentManagement(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
+	public ModelAndView recruitmentManagement(HttpServletRequest request)
+			throws JsonParseException, JsonMappingException, IOException {
 		String pageStr = request.getParameter("page");
 		int page = 0;
 		int pagesize = 3;
 		if (session.getAttribute("admin") != null) {
-			if (pageStr==null) {
+			if (pageStr == null) {
 				page = 1;
 			} else {
 				page = Integer.parseInt(pageStr);
@@ -48,6 +51,9 @@ public class RecruitmentManagementController {
 			paramsRecruit.put("page", page);
 			paramsRecruit.put("pagesize", pagesize);
 			List<PostModel> listRecruitPost = PostService.getListPostWithParams(paramsRecruit, session);
+			for (PostModel pm : listRecruitPost) {
+				pm.setBody(Encode.forHtml(pm.getBody()));
+			}
 			ModelAndView mav = new ModelAndView("admin/RecruitmentManagement/recruitmentManagement");
 			mav.addObject("listRecruitPost", listRecruitPost);
 			mav.addObject("page", page);
@@ -66,7 +72,7 @@ public class RecruitmentManagementController {
 			Map<String, Object> paramsRecruit = new HashMap<>();
 			paramsRecruit.put("id", id);
 			PostModel recruitPost = PostService.getPost(paramsRecruit, session);
-
+			recruitPost.setBody(Encode.forHtml(recruitPost.getBody()));
 			ModelAndView mav = new ModelAndView("admin/RecruitmentManagement/updateRecruitment");
 			mav.addObject("recruitPost", recruitPost);
 			return mav;
@@ -83,7 +89,7 @@ public class RecruitmentManagementController {
 		if (session.getAttribute("admin") != null) {
 			PostModel model = new PostModel();
 			model.setTitle(title);
-			model.setBody(content);
+			model.setBody(Encode.forHtml(content));
 			model.setType(1);
 			model.setCreated_at(created);
 			model.setImg(img);
@@ -104,7 +110,7 @@ public class RecruitmentManagementController {
 
 			PostModel model = new PostModel();
 			model.setTitle(title);
-			model.setBody(content);
+			model.setBody(Encode.forHtml(content));
 			model.setType(1);
 			model.setImg("");
 

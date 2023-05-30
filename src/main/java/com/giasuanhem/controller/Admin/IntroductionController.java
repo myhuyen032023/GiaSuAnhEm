@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.giasuanhem.model.Models.PostModel;
 import com.giasuanhem.service.Service.PostService;
 
+import org.owasp.encoder.Encode;
+
 @Controller
 public class IntroductionController {
 	@Autowired
@@ -47,6 +49,9 @@ public class IntroductionController {
 			@RequestParam("image") String img) throws JsonParseException, JsonMappingException, IOException {
 
 		if (session.getAttribute("admin") != null) {
+			
+			content = Encode.forHtml(content);
+			
 			PostModel model = new PostModel();
 			model.setTitle(title);
 			model.setBody(content);

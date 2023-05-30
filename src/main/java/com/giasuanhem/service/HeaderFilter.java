@@ -4,6 +4,9 @@ import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpHeaders;
+
 import java.io.IOException;
 
 public class HeaderFilter implements Filter {
@@ -20,17 +23,22 @@ public class HeaderFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		httpResponse.setHeader("X-Content-Type-Options", "nosniff");
-		httpResponse.setHeader("Content-Security-Policy",
-				"default-src 'self' data: https://www.google-analytics.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; script-src 'self' https://kit.fontawesome.com 'unsafe-inline'; font-src 'self' https://ka-f.fontawesome.com; connect-src 'self' https://ka-f.fontawesome.com;");
+//		httpResponse.setHeader("Content-Security-Policy", "default-src 'self' data: https://www.google-analytics.com;"
+//				+ " style-src 'self' https://fonts.googleapis.com https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css;"
+//				+ " script-src 'self' https://kit.fontawesome.com 'unsafe-inline';"
+//				+ " font-src 'self' https://ka-f.fontawesome.com;"
+//				+ " connect-src 'self' https://ka-f.fontawesome.com;");
+
 		httpResponse.setHeader("X-Frame-Options", "DENY");
 		Cookie[] cookies = httpRequest.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				// Add the SameSite attribute to the cookie header
-				String cookieHeaderValue = cookie.getName() + "=" + cookie.getValue()
-						+ ";HttpOnly; SameSite=Lax; Secure";
+				if (cookie.getName().equals("JSESSIONID")) {
+					String cookieHeaderValue = cookie.getName() + "=" + cookie.getValue()
+							+ ";HttpOnly;Secure;SameSite=Lax";
 
-				httpResponse.addHeader("Set-Cookie", cookieHeaderValue);
+					httpResponse.addHeader(HttpHeaders.SET_COOKIE, cookieHeaderValue);
+				}
 			}
 		}
 

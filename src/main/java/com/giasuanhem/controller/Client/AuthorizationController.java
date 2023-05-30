@@ -6,6 +6,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,24 +84,40 @@ public class AuthorizationController {
 			@RequestParam("password") String password, @RequestParam("role") int role)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		AccountModel modelA = new AccountModel();
-		modelA.setUsername(username);
-		modelA.setEmail(email);
-		modelA.setPassword(password);
-		modelA.setRole(role);
-		modelA.setState(2);
+		username = username.trim();
+		
 
-		AccountService.register(modelA, session);
-		if (session.getAttribute("errorRegister") != null)
+		// Define the regular expression pattern for special characters
+		String specialCharsPattern = "[!@#$%^&*(),.?/\\\";:{}|<>]+-_~";
+
+		// Create a Pattern object with the special characters pattern
+		Pattern pattern = Pattern.compile(specialCharsPattern);
+
+		// Create a Matcher object to match the pattern against the string
+		Matcher matcher = pattern.matcher(username);
+
+		if (username.contains(" ") == false && matcher.find() == false &&  !username.isEmpty()==false) {
+			AccountModel modelA = new AccountModel();
+			modelA.setUsername(username);
+			modelA.setEmail(email);
+			modelA.setPassword(password);
+			modelA.setRole(role);
+			modelA.setState(2);
+
+			AccountService.register(modelA, session);
+			if (session.getAttribute("errorRegister") != null)
+				return "redirect:/dang-ky";
+
+			Map<String, Object> params = new HashMap<>();
+			params.put("username", modelA.getUsername());
+			params.put("password", modelA.getPassword());
+			AccountService.checkLogin(params, session);
+			session.removeAttribute("errorLogin");
+			return "redirect:/verify";
+		} else {
+			session.setAttribute("errorLogin", "Invalid information");
 			return "redirect:/dang-ky";
-
-		Map<String, Object> params = new HashMap<>();
-		params.put("username", modelA.getUsername());
-		params.put("password", modelA.getPassword());
-		AccountService.checkLogin(params, session);
-		session.removeAttribute("errorLogin");
-		return "redirect:/verify";
-
+		}
 	}
 
 	@RequestMapping(value = "/verify", method = RequestMethod.GET)

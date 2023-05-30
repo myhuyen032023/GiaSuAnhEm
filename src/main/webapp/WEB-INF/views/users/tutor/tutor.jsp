@@ -50,6 +50,7 @@
 	href="<c:url value="resources/assets/css/font-awesome/css/font-awesome.min.css" />"
 	rel="stylesheet" type="text/css" />
 <script src="https://kit.fontawesome.com/672e69e895.js"
+	integrity="sha256-tMu+KsksMD+e9N9t3Smfms0GlJ8lv7tXRihGgyVpYvU= sha384-Unu9zW07oMurI469ODBqZ6NGe75y4q6i3c92/4mNTyD30a9L3By6R9Ebhef6KFAT sha512-BpJJVylQTa4q+Qhwl8Mq7b/AGSnpTm8teUee//a26/CHyngF/nFBAnSrFE/yMwaKr8Ti66aAdY8xoCXlixX+Hw=="
 	crossorigin="anonymous"></script>
 </head>
 

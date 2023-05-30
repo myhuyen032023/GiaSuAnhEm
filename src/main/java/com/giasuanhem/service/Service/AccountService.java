@@ -160,9 +160,6 @@ public class AccountService {
 		session.setAttribute("id", modelAccount.getId());
 		session.setAttribute("state", modelAccount.getState());
 		session.setAttribute("accessToken", modelAccount.getToken());
-		
-		System.out.println(modelAccount.getToken());
-		System.out.println(jsonResponse);
 
 		if (modelAccount.getRole() == 0) {
 			session.removeAttribute("role");
@@ -200,10 +197,6 @@ public class AccountService {
 		session.setAttribute("id", modelAccount.getId());
 		session.setAttribute("state", modelAccount.getState());
 		session.setAttribute("accessToken", modelAccount.getToken());
-		
-		System.out.println(modelAccount.getToken());
-		System.out.println(jsonResponse);
-
 		if (modelAccount.getRole() == 0) {
 			session.removeAttribute("role");
 			session.setAttribute("admin", modelAccount.getUsername());
