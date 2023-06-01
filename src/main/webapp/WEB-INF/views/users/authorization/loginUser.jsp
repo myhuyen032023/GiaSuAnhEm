@@ -32,7 +32,7 @@
 
 		// place the CSRF token in a cookie
 		javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("csrf", csrfToken);
-		String cookieHeaderValue = cookie.getName() + "=" + cookie.getValue() + ";HttpOnly;Secure;SameSite=LAX";
+		String cookieHeaderValue = cookie.getName() + "=" + cookie.getValue() + ";HttpOnly; Secure; SameSite=LAX";
 		response.addHeader(org.springframework.http.HttpHeaders.SET_COOKIE, cookieHeaderValue);
 		%>
 		<form action="dang-nhap" method="post">

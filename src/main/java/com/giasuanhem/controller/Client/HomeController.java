@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -92,7 +93,10 @@ public class HomeController {
 			Map<String, Object> paramsIntroduction = new HashMap<>();
 			paramsIntroduction.put("type", 1);
 			List<PostModel> listRecruitment = PostService.getListPostWithParams(paramsIntroduction, session);
-
+//			for (PostModel pm : listRecruitment) {
+//				pm.setTitle(Encode.forHtml(pm.getTitle()));
+//				pm.setBody(Encode.forHtml(pm.getBody()));
+//			}
 			ModelAndView mav = new ModelAndView("users/home/recruit");
 			mav.addObject("listRecruitment", listRecruitment);
 

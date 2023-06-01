@@ -35,7 +35,7 @@ public class HeaderFilter implements Filter {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("JSESSIONID")) {
 					String cookieHeaderValue = cookie.getName() + "=" + cookie.getValue()
-							+ ";HttpOnly;Secure;SameSite=Lax";
+							+ ";HttpOnly ;Secure;SameSite=Lax";
 
 					httpResponse.addHeader(HttpHeaders.SET_COOKIE, cookieHeaderValue);
 				}

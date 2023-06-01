@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,12 @@ public class TutorController {
 
 			ModelAndView mav = new ModelAndView("users/tutor/tutor");
 			List<TutorModel> modelList = TutorService.getListTutor(session);
+//			for (TutorModel tt : modelList) {
+//				tt.setAddress(Encode.forHtml(tt.getAddress()));
+//				tt.setDescribe(Encode.forHtml(tt.getDescribe()));
+//				tt.setName(Encode.forHtml(tt.getName()));
+//				tt.setPhone(Encode.forHtml(tt.getPhone()));
+//			}
 
 			String category = request.getParameter("category");
 			if (category != null) {
@@ -78,11 +85,11 @@ public class TutorController {
 			if (String.valueOf(session.getAttribute("role")).equals("tutor")) {
 
 				Map<String, Object> paramsClass = new HashMap<>();
-				paramsClass.put("type", 1);
+				paramsClass.put("type", 0);
 				List<CategoryModel> listCategoryClass = CategoryService.getListCategory(paramsClass, session);
 
 				Map<String, Object> paramsDistrict = new HashMap<>();
-				paramsDistrict.put("type", 0);
+				paramsDistrict.put("type", 1);
 				List<CategoryModel> listCategoryDistrict = CategoryService.getListCategory(paramsDistrict, session);
 
 				List<ClassModel> listClass = ClassService.getListClass(session);
@@ -122,8 +129,7 @@ public class TutorController {
 
 			if (session.getAttribute("errorCreateTutor") == null) {
 				return "redirect:/gia-su";
-			}
-			else {
+			} else {
 				return "redirect:/them-gia-su";
 			}
 		} catch (Exception e) {

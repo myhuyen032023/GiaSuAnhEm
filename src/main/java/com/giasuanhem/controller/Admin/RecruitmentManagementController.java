@@ -51,9 +51,11 @@ public class RecruitmentManagementController {
 			paramsRecruit.put("page", page);
 			paramsRecruit.put("pagesize", pagesize);
 			List<PostModel> listRecruitPost = PostService.getListPostWithParams(paramsRecruit, session);
-			for (PostModel pm : listRecruitPost) {
-				pm.setBody(Encode.forHtml(pm.getBody()));
-			}
+//			for (PostModel pm : listRecruitPost) {
+//				pm.setTitle(Encode.forHtml(pm.getTitle()));
+//				pm.setBody(Encode.forHtml(pm.getBody()));
+//				System.out.println(pm.getBody());
+//			}
 			ModelAndView mav = new ModelAndView("admin/RecruitmentManagement/recruitmentManagement");
 			mav.addObject("listRecruitPost", listRecruitPost);
 			mav.addObject("page", page);
@@ -72,7 +74,7 @@ public class RecruitmentManagementController {
 			Map<String, Object> paramsRecruit = new HashMap<>();
 			paramsRecruit.put("id", id);
 			PostModel recruitPost = PostService.getPost(paramsRecruit, session);
-			recruitPost.setBody(Encode.forHtml(recruitPost.getBody()));
+//			recruitPost.setBody(Encode.forHtml(recruitPost.getBody()));
 			ModelAndView mav = new ModelAndView("admin/RecruitmentManagement/updateRecruitment");
 			mav.addObject("recruitPost", recruitPost);
 			return mav;
@@ -89,7 +91,7 @@ public class RecruitmentManagementController {
 		if (session.getAttribute("admin") != null) {
 			PostModel model = new PostModel();
 			model.setTitle(title);
-			model.setBody(Encode.forHtml(content));
+			model.setBody(content);
 			model.setType(1);
 			model.setCreated_at(created);
 			model.setImg(img);
@@ -110,7 +112,7 @@ public class RecruitmentManagementController {
 
 			PostModel model = new PostModel();
 			model.setTitle(title);
-			model.setBody(Encode.forHtml(content));
+			model.setBody(content);
 			model.setType(1);
 			model.setImg("");
 
